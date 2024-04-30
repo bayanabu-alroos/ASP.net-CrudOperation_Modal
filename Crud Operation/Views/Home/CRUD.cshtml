@@ -1,0 +1,99 @@
+﻿@model List<ProductDTO>
+
+@{
+    ViewData["Title"] = "CRUD";
+}
+<!-- Navbar -->
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+     navbar-scroll="true">
+    <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+                <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tables</li>
+            </ol>
+            <h6 class="font-weight-bolder mb-0">Tables</h6>
+        </nav>
+
+    </div>
+</nav>
+<!-- End Navbar -->
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                        <h6 class="text-white text-capitalize ps-3">Products Table</h6>
+                    </div>
+                </div>
+                <div class="card-body px-0 pb-2">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible col-10 m-auto  mb-3 text-white">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+                    <button  class="btn btn-outline-success btn-sm  mt-3 mx-6 px-3 mb-0" data-bs-toggle="modal"
+                            data-bs-target="#CreateModal" type="button"> <i class="material-icons text-lg me-2">add</i>Create
+                    </button>
+                    @Html.Partial("Create")
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        #
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Product Image
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Name Product
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Category
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Description
+                                    </th>
+                                    <th class="text-secondary opacity-7">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td id="itemId">@item.Id</td>
+                                        <td id="itemImageUrl">
+                                            <img src="@Url.Content(item.ImageUrl)" class="avatar avatar-sm me-3 border-radius-xl" alt="user1">
+                                        </td>
+                                        <td id="itemName">
+                                            @item.Name
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            @item.Category
+                                        </td>
+                                        <td id="itemDesc" class="align-middle text-center">
+                                            @item.Description
+                                        </td>
+                                        <td class="align-middle">
+                                            <a class="btn btn-link text-dark px-3 mb-0" onclick="handleEditButtonClick(this)" data-bs-toggle="modal" data-bs-target="#UpdateModal" type="button"><i class="material-icons text-sm me-2">edit</i>Edit</a>
+                                            <a class="btn btn-link text-danger  px-3 mb-0" onclick="handleDeleteButtonClick(this)" data-bs-toggle="modal" data-bs-target="#DeleteModal" type="button"><i class="material-icons text-sm me-2">delete</i>Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                                
+                            </tbody>
+                        </table>
+                        @Html.Partial("Update")
+                        @Html.Partial("Delete")
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
